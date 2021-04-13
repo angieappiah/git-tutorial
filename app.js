@@ -14,9 +14,12 @@ function init() {
     const far = 500;
 
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.set(-50, 40, 350);
+    camera.position.set(0, 0, 20);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true })
+    const ambient = new THREE.AmbientLight(0x404040, 5);
+    scene.add(ambient);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(container.clientWidth, container.clientHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
 
@@ -24,8 +27,11 @@ function init() {
 
 
     let loader = new THREE.GLTFLoader();
-    loader.load("./3d/scene.gltf", function (gltf) {
+    loader.load("./house/scene.gltf", function (gltf) {
         scene.add(gltf.scene)
+        console.log(gltf);
+
+        renderer.render(scene, camera);
 
     })
 
