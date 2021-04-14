@@ -19,6 +19,10 @@ function init() {
     const ambient = new THREE.AmbientLight(0x404040, 5);
     scene.add(ambient);
 
+    const light = new THREE.DirectionalLight(0xffffff, 5);
+    light.position.set(10, 10, 30);
+    scene.add(light);
+
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(container.clientWidth, container.clientHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
@@ -29,11 +33,18 @@ function init() {
     let loader = new THREE.GLTFLoader();
     loader.load("./house/scene.gltf", function (gltf) {
         scene.add(gltf.scene)
-        console.log(gltf);
+        house = gltf.scene.children[0]
+        animate();
 
-        renderer.render(scene, camera);
+
 
     })
+
+    function animate() {
+        requestAnimationFrame(animate)
+        house.rotation.z += 0.005;
+        renderer.render(scene, camera);
+    }
 
 
 
